@@ -1,4 +1,4 @@
-;	void		ft_list_sort(t_list **begin_list, int (*cmp)());
+;	void	ft_list_sort(t_list **begin_list, int (*cmp)());
 
 section .text
 global _ft_list_sort
@@ -10,17 +10,16 @@ _ft_list_sort:
 	jz		.ret
 	mov		rdx, rsi		; rdx =  *cmp
 	mov		r10, [rdi]		; tmp = *begin_list
+	push	rsi				; save cmp
 
 .loop:
 	mov		r11, [r10+8]	; r11 = tmp->next
 	test	r11, r11		; check if tmp->next == NULL
 	jz		.ret
 	push	rdi				; save begin_list
-	push	rsi				; save cmp
 	mov		rsi, [r11]		; rsi = tmp->next->data
 	mov		rdi, [r10]		; rdi = tmp->data
 	call	rdx				; *cmp(rdi = tmp->data, rsi = tmp->next->data)
-	pop		rsi				; restore cmp
 	pop		rdi				; restore begin_list
 	test	rax, rax
 	jg		.swap			; swap if cmp ret > 0
@@ -39,4 +38,5 @@ _ft_list_sort:
 	jmp		.loop
 
 .ret:
+	pop		rsi				; restore cmp
 	ret

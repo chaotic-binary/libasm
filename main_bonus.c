@@ -77,7 +77,26 @@ int		main()
 
 	//push_front_test();
 
-	list_sort_test();
+	//list_sort_test();
+
+	t_list	*list;
+
+	printf("\n-----list_remove_if-----\n");
+	list = NULL;
+	ft_list_push_front(&list, "test");
+	ft_list_push_front(&list, "purr");
+	ft_list_push_front(&list, "what");
+	ft_list_push_front(&list, "ok");
+	ft_list_push_front(&list, "meow");
+	ft_list_push_front(&list, "one");
+	ft_list_push_front(&list, "toto");
+	ft_list_push_front(&list, "azaza");
+	printf("before:\n");
+	print_list(list);
+	ft_list_remove_if(&list, "toto", &strcmp, &free);
+	printf("\nafter:\n");
+	print_list(list);
+	printf("\n");
 	return 0;
 
 }

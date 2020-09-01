@@ -1,4 +1,4 @@
-;	int			ft_list_size(t_list *begin_list); begin_list = rdi
+;	int		ft_list_size(t_list *begin_list); begin_list = rdi
 
 global _ft_list_size
 section .text

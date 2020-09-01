@@ -20,7 +20,7 @@ _ft_list_push_front:
 .ret:
 	ret
 
-;	t_list	*ft_create_elem(void *data) data = rdi
+;	t_list		*ft_create_elem(void *data) data = rdi
 _ft_create_elem:
 	push	rdi					; save pointer to data
 	mov		rdi, 16 			; sizeof(t_list) = 8 bytes for the pointer to begin_list + 8 bytes for the pointer next
