@@ -2,7 +2,7 @@
 ;	fd = rdi, buf = rsi, count = rdx
 
 global	_ft_read
-extern ___error ; for errno
+extern	___error ; for errno
 section	.text
 
 _ft_read:

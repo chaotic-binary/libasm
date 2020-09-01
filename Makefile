@@ -44,10 +44,13 @@ fclean: clean
 test: $(NAME) main.c libasm.h
 	gcc -L. -lasm -o test main.c
 	./test < Makefile
+	@rm -rf ./test.txt
+	@rm -rf ./test
 
 testb: main_bonus.c libasm.h
 	@$(MAKE) bonus
 	gcc -L. -lasm -o test main_bonus.c
 	./test
+	@rm -rf ./test
 
 re: fclean all

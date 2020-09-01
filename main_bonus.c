@@ -54,12 +54,12 @@ void		list_sort_test(void)
 	printf("\n-----list_sort-----\n");
 	list = NULL;
 	ft_list_push_front(&list, "test");
-	ft_list_push_front(&list, "x");
+	ft_list_push_front(&list, "purr");
 	ft_list_push_front(&list, "what");
 	ft_list_push_front(&list, "ok");
 	ft_list_push_front(&list, "meow");
 	ft_list_push_front(&list, "one");
-	ft_list_push_front(&list, "purr");
+	ft_list_push_front(&list, "x");
 	ft_list_push_front(&list, "azaza");
 	printf("before:\n");
 	print_list(list);
@@ -77,7 +77,7 @@ int		main()
 
 	//push_front_test();
 
-	//list_sort_test();
+	list_sort_test();
 	return 0;
 
 }

@@ -13,12 +13,13 @@ _ft_strdup:
 	mov		rdi, rax			; rdi = strlen = sizeof(s)
 	inc		rdi					; + 1 for '\0'
 	call	_malloc				; malloc allocates memory for the string using length in rdi
-	pop		rsi					; load saved pointer to s from the stack to rsi - second parameter for strcpy
 	test	rax, rax			; malloc protection (malloc puts pointer to the new block of memory in rax)
 	jz		.malloc_error
 	mov		rdi, rax			; the result of malloc is in rdi - the first parameter for strcpy
+	pop		rsi					; load saved pointer to s from the stack to rsi - second parameter for strcpy
 	call	_ft_strcpy			; strcpy fills dest and returns the pointer to it to rax.
 	ret
 
 .malloc_error:
-	ret		; return NULL
+	pop		rdi					; restore pointer to s
+	ret							; return NULL

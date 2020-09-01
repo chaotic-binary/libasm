@@ -16,11 +16,11 @@ _ft_list_sort:
 	test	r11, r11		; check if tmp->next == NULL
 	jz		.ret
 	push	rdi				; save begin_list
-;	push	rsi
+	push	rsi				; save cmp
 	mov		rsi, [r11]		; rsi = tmp->next->data
 	mov		rdi, [r10]		; rdi = tmp->data
 	call	rdx				; *cmp(rdi = tmp->data, rsi = tmp->next->data)
-;	pop		rsi
+	pop		rsi				; restore cmp
 	pop		rdi				; restore begin_list
 	test	rax, rax
 	jg		.swap			; swap if cmp ret > 0
@@ -35,7 +35,7 @@ _ft_list_sort:
 	jmp		.loop
 
 .next:
-	lea		r10, [r10+8]	; tmp = tmp->next
+	mov		r10, [r10+8]	; tmp = tmp->next
 	jmp		.loop
 
 .ret:

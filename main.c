@@ -148,11 +148,11 @@ void	test_strcmp(void)
 
 int		main(void)
 {
-	test_read();
-	test_write();
-	test_strlen();
-	test_strcpy();
 	test_strdup();
+	/*test_strlen();
+	test_strcpy();
 	test_strcmp();
+	test_write();
+	test_read();*/
 	return (0);
 }
