@@ -4,13 +4,15 @@ section .text
 global _ft_list_sort
 
 _ft_list_sort:
+	push	rsi				; save cmp
 	test	rdi, rdi		; check if begin_list = NULL
 	jz		.ret
-	test	rsi, rsi		; ckeck if there is cmp function
+	test	rsi, rsi		; check if there is cmp function
+	jz		.ret
+	mov		r10, [rdi]		; tmp = *begin_list
+	test	r10, r10
 	jz		.ret
 	mov		rdx, rsi		; rdx =  *cmp
-	mov		r10, [rdi]		; tmp = *begin_list
-	push	rsi				; save cmp
 
 .loop:
 	mov		r11, [r10+8]	; r11 = tmp->next
