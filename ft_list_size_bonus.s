@@ -4,6 +4,7 @@ global _ft_list_size
 section .text
 
 _ft_list_size:
+	push	rdi				; save pointer to begin_list
 	xor		rax, rax		; initialize register with 0
 
 .loop:
@@ -14,4 +15,5 @@ _ft_list_size:
 	jmp		.loop
 
 .ret:
-	ret		; return value of counter
+	pop		rdi				; restore register value
+	ret						; return value of counter

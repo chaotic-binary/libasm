@@ -13,9 +13,11 @@ _ft_list_push_front:
 	test	rax, rax			; malloc protection (malloc puts pointer to the new block of memory in rax)
 	jz		_malloc_error
 	pop		rdi					; load pointer to rdi
+	push	rsi
 	mov		rsi, qword [rdi]
 	mov		qword [rax+8], rsi	; new->next = *begin_list
 	mov		qword [rdi], rax	; *begin->list = new
+	pop		rsi
 
 .ret:
 	ret

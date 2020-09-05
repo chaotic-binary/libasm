@@ -5,6 +5,10 @@ global _ft_list_sort
 
 _ft_list_sort:
 	push	rsi				; save cmp
+;	push	r8				; save registers used by this func
+;	push	r9
+;	push	r10
+;	push	r11
 	test	rdi, rdi		; check if begin_list = NULL
 	jz		.ret
 	test	rsi, rsi		; check if there is cmp function
@@ -40,5 +44,9 @@ _ft_list_sort:
 	jmp		.loop
 
 .ret:
+;	pop		r11				; restore registers
+;	pop		r10
+;	pop		r9
+;	pop		r8
 	pop		rsi				; restore cmp
 	ret

@@ -9,6 +9,8 @@ _ft_list_remove_if:
 	jz		.ret
 	test	rdx, rdx
 	jz		.ret
+;	push	r10
+;	push	r11
 
 .loop_begin:
 	mov		r10, [rdi]		; r10 = *begin_list
@@ -28,8 +30,12 @@ _ft_list_remove_if:
 	push	rdi
 	push	rsi
 	push	rdx
+	push	r10
+	push	r11
 	mov		rdi, r10		; rdi = *begin_list
 	call	_free			; free(rdi=*begin_list)
+	pop		r11
+	pop		r10
 	pop		rdx
 	pop		rsi
 	pop		rdi
@@ -39,11 +45,11 @@ _ft_list_remove_if:
 	test	r10, r10		; check if r10 == NULL
 	jz		.ret
 	mov		r11, [r10+8]	; r11 = r10->next
-	test	r11, r11		; check if r10->next == NULL
+	test	r11, r11		; check if tmp->next == NULL
 	jz		.ret
 	push	rdi
 	push	rsi
-	mov		rdi, [r11]		; rdi = r10->next->data
+	mov		rdi, [r11]		; rdi = tmp->next->data
 	call	rdx				; *cmp(rdi=(*being_list)->data, rsi=data_ref)
 	pop		rsi
 	pop		rdi
@@ -53,10 +59,12 @@ _ft_list_remove_if:
 	push	rsi
 	push	rdx
 	push	r10
-	mov		rdi, r11		; rdi = r10->next
-	mov		r11, [r11+8]	; r11 = r10->next->next
-	mov		[r10+8], r11	; r10->next = r10->next->next
-	call	_free			; free(rdi=r10->next)
+	push	r11
+	mov		rdi, r11		; rdi = tmp->next
+	mov		r11, [r11+8]	; r11 = tmp->next->next
+	mov		[r10+8], r11	; r10->next = tmp->next->next
+	call	_free			; free(rdi=tmp->next)
+	pop		r11
 	pop		r10
 	pop		rdx
 	pop		rsi
@@ -64,8 +72,10 @@ _ft_list_remove_if:
 	jmp		.loop_mid
 
 .next:
-	mov		r10, r11		; r10 = r10->next
+	mov		r10, r11		; r10 = tmp->next
 	jmp		.loop_mid
 
 .ret:
+;	pop		r11
+;	pop		r10
 	ret

@@ -4,6 +4,8 @@ global _ft_strcmp
 section .text
 
 _ft_strcmp:
+	push	rdi
+	push	rsi
 	xor		rax, rax		; initialize registers with 0
 	xor		rdx, rdx
 ;	test	rdi, rdi		; uncomment to avoid segfault which strcmp has when one of the arg == NULL
@@ -23,4 +25,6 @@ _ft_strcmp:
 	jmp		.loop
 
 .ret:
+	pop		rsi
+	pop		rdi
 	ret		; rax = s1 - s2

@@ -4,6 +4,8 @@ global _ft_strcpy
 section .text
 
 _ft_strcpy:
+	push	rdi
+	push	rsi
 	mov		rax, rdi 		; copy the pointer to dest
 
 .loop:
@@ -16,4 +18,6 @@ _ft_strcpy:
 	jmp		.loop
 
 .ret:
+	pop		rsi
+	pop		rdi
 	ret		; return pointer to dest
