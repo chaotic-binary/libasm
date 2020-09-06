@@ -33,40 +33,41 @@ void	test_read(void)
 void	test_write(void)
 {
 	long	myret;
-	long	exret;
+	long	expret;
 	int		fd;
 
-	printf("\n-----write-----\n");
+	# define WRITE(myret, expret)	printf("ft_write returns %ld, expected %ld\n", myret, expret);
 
+	printf("\n-----write-----\n");
 	myret = ft_write(1, "toto\n", 5);
-	exret = write(1, "toto\n", 5);
-	if (myret != exret)
-		printf("ft_write returns %ld\n, write returns %ld\n", myret, exret);
+	expret = write(1, "toto\n", 5);
+	if (myret != expret)
+		WRITE(myret, expret);
 
 	myret = ft_write(1, "to\nto", 3);
-	exret = write(1, "to\nto", 3);
-	if (myret != exret)
-		printf("ft_write returns %ld\n, write returns %ld\n", myret, exret);
+	expret = write(1, "to\nto", 3);
+	if (myret != expret)
+		WRITE(myret, expret);
 
 	myret = ft_write(1, NULL, 4);
-	exret = write(1, NULL, 4);
-	if (myret != exret)
-		printf("ft_write returns %ld\n, write returns %ld\n", myret, exret);
+	expret = write(1, NULL, 4);
+	if (myret != expret)
+		WRITE(myret, expret);
 
 	errno = 0;
 	myret = ft_write(-1, "toto", 4);
-	printf("ft_write errno = %d\n", errno);
-	exret = write(-1, "toto", 4);
-	printf("   write errno = %d\n", errno);
-	if (myret != exret)
-		printf("ft_write returns %ld\n, write returns %ld\n", myret, exret);
+	printf("for fd -1 ft_write errno = %d\n", errno);
+	expret = write(-1, "toto", 4);
+	printf("for fd -1 expected errno = %d\n", errno);
+	if (myret != expret)
+		WRITE(myret, expret);
 
 	errno = 0;
 	fd = open("test.txt", O_CREAT | O_APPEND | O_WRONLY, 0755);
 	ft_write(fd, "   Look at the file and find ", 29);
 	printf("ft_write errno = %d\n", errno);
 	write(fd, "that I can write ", 17);
-	printf("   write errno = %d\n", errno);
+	printf("expected errno = %d, test.txt should be created\n", errno);
 	close(fd);
 
 	errno = 0;
@@ -74,17 +75,17 @@ void	test_write(void)
 	ft_write(fd, "!", 1);
 	printf("ft_write errno = %d\n", errno);
 	write(fd, "?", 1);
-	printf("   write errno = %d\n", errno);
+	printf("expected errno = %d, test.txt should be updated\n", errno);
 	close(fd);
 
 	myret = ft_write(3,"toto", 4);
-	exret = write(3,"toto", 4);
-	if (myret != exret)
-		printf("ft_write returns %ld\n, write returns %ld\n", myret, exret);
+	expret = write(3,"toto", 4);
+	if (myret != expret)
+		WRITE(myret, expret);
 	myret = ft_write(3,"toto", 0);
-	exret = write(3,"toto", 0);
-	if (myret != exret)
-		printf("ft_write returns %ld\n, write returns %ld\n", myret, exret);
+	expret = write(3,"toto", 0);
+	if (myret != expret)
+		WRITE(myret, expret);
 }
 
 void	test_strlen(void)
@@ -101,35 +102,46 @@ void	test_strlen(void)
 void	test_strdup(void)
 {
 	char *tmp;
-	char *tmp2;
+	char *str;
+	int		i;
 
-	# define DUP(s)	tmp = ft_strdup(s); printf("`%s` (`%s`)\n", tmp, s); free(tmp); tmp = NULL;
+	# define STRDUP(s)	tmp = ft_strdup(s); printf("`%s` is a copy of `%s`\n", tmp, s); free(tmp); tmp = NULL;
 
 	printf("\n------strdup-----\n");
-	tmp2 = ft_strdup("toto");
-	int i = 0;
-	while(tmp2[i])
-		{printf("!%c\n", tmp2[i]);
-		i++;}
-	DUP(tmp2)
-	free(tmp2);
-	DUP("totobar")
-	DUP("blablabla")
-	DUP("")
+	str = ft_strdup("meow");
+	i = 0;
+	while(str[i])
+	{
+		printf("!%c\n", str[i]);
+		i++;
+	}
+	STRDUP(str)
+	free(str);
+	STRDUP("?     !")
+	STRDUP("blablabla")
+	STRDUP("")
 }
 
 void	test_strcpy(void)
 {
 	int		i;
 	char	buffer[100];
+	char	*str;
 
 	printf("\n-----strcpy-----\n");
 	i = 0;
 	while (i < 100)
 		buffer[i++] = 0;
-	printf("`%s` (`toto`)\n", ft_strcpy(buffer, "toto"));
-	printf("`%s` (empty)\n", ft_strcpy(buffer, ""));
-	printf("`%s` (`blablabla`)\n", ft_strcpy(buffer, "blablabla"));
+	str = ft_strcpy(buffer, "meow");
+	i = 0;
+	while(str[i])
+	{
+		printf("!%c\n", str[i]);
+		i++;
+	}
+	printf("`%s` is a copy of `meow`\n", ft_strcpy(buffer, "meow"));
+	printf("`%s` is a copy of an empty str\n", ft_strcpy(buffer, ""));
+	printf("`%s` is a copy of `long string`\n", ft_strcpy(buffer, "long string"));
 }
 
 void	test_strcmp(void)
@@ -143,16 +155,17 @@ void	test_strcmp(void)
 	STRCMP("toto", "")
 	STRCMP("totoc", "totoaa")
 	STRCMP("toto", "totr")
-	STRCMP("toto\ndsdssd", "totr\n\rjsdbcsd")
+	STRCMP("to", "toto")
+	STRCMP("o\nkgfkg", "r\n\rfgnkfgk")
 }
 
 int		main(void)
 {
 	test_strdup();
-	test_strlen();
 	test_strcpy();
+	test_strlen();
 	test_strcmp();
-	//test_write();
-	//test_read();
+	test_write();
+	test_read();
 	return (0);
 }

@@ -32,7 +32,7 @@ void		push_front_test()
 	print_list(list);
 }
 
-void		list_size_test(int num)
+void		list_size(int num)
 {
 	t_list	*list;
 
@@ -45,6 +45,13 @@ void		list_size_test(int num)
 	else
 		printf("KO, expected %d, get %d\n", num, ft_list_size(list));
 	print_list(list);
+}
+
+void		list_size_test()
+{
+	printf("\n-----list_size-----\n");
+	list_size(5);
+	list_size(0);
 }
 
 void		list_sort_test(void)
@@ -64,7 +71,7 @@ void		list_sort_test(void)
 	printf("before:\n");
 	print_list(list);
 	ft_list_sort(&list, strcmp);
-	printf("\nafter:\n");
+	printf("\nafter sort:\n");
 	print_list(list);
 	printf("\n");
 }
@@ -75,69 +82,64 @@ void		list_remove_test(void)
 
 	printf("\n-----list_remove_if-----\n");
 	list = NULL;
-	ft_list_push_front(&list, "toto");
+	ft_list_push_front(&list, "DELETEME");
 	ft_list_push_front(&list, "purr");
-	ft_list_push_front(&list, "toto");
+	ft_list_push_front(&list, "DELETEME");
 	ft_list_push_front(&list, "ok");
 	ft_list_push_front(&list, "meow");
 	ft_list_push_front(&list, "one");
-	ft_list_push_front(&list, "toto");
-	ft_list_push_front(&list, "toto");
+	ft_list_push_front(&list, "DELETEME");
+	ft_list_push_front(&list, "DELETEME");
 	printf("before:\n");
 	print_list(list);
-	ft_list_remove_if(&list, "toto", &strcmp);
-	printf("\nafter:\n");
+	ft_list_remove_if(&list, "DELETEME", &strcmp);
+	printf("\nafter remove:\n");
 	print_list(list);
 	printf("\n");
 }
 
 void		atoi_base_test()
 {
-	# define ATOI_BASE(s, b)	i = ft_atoi_base(s, b); printf("`%s`[%d] = %d\n", s, b, i);
+	# define ATOI_BASE(s, b)	i = ft_atoi_base(s, b); printf("`%s` [base %d] = %d [base 10]\n", s, b, i);
 
 	printf("\n-----atoi_base-----\n");
 	int	i = 0;
 	ATOI_BASE("42", 10)
 	ATOI_BASE("0", 10)
-	ATOI_BASE("1", 10)
-	ATOI_BASE("1215415478", 10)
 	ATOI_BASE("-0", 10)
-	ATOI_BASE("-1", 10)
 	ATOI_BASE("-42", 10)
 	ATOI_BASE("--42", 10)
+	ATOI_BASE("++42", 10)
 	ATOI_BASE("-+-42", 10)
 	ATOI_BASE("-+-+-+42", 10)
 	ATOI_BASE("-+-+-+-42", 10)
-	ATOI_BASE("-1215415478", 10)
 	ATOI_BASE("2147483647", 10)
 	ATOI_BASE("2147483648", 10)
 	ATOI_BASE("-2147483648", 10)
-	ATOI_BASE("-2147483649", 10)
+	ATOI_BASE("0", 2)
+	ATOI_BASE("1", 2)
+	ATOI_BASE("2", 2)
 	ATOI_BASE("2a", 16)
 	ATOI_BASE("ff", 16)
-	ATOI_BASE("poney", 'x')
-	ATOI_BASE("dommage", '\t')
+	ATOI_BASE("10", 16)
+	ATOI_BASE("x", 'x')
+	ATOI_BASE("8", '\t')
 	ATOI_BASE("    +42", 10)
 	ATOI_BASE("    -42", 10)
 	ATOI_BASE("    42", 10)
-	ATOI_BASE("  \t\n\r\v\f  42", 2)
-	ATOI_BASE("  \t\n\r\v\f  -42", 2)
-	ATOI_BASE("42FINIS !", 8)
-	ATOI_BASE("-42FINIS !", 8)
-	ATOI_BASE("C'est dommage42", 10)
+	ATOI_BASE("  \t\n\r\v\f  10", 8)
+	ATOI_BASE("  \t\n\r\v\f  -10", 8)
+	ATOI_BASE("42meow !", 8)
+	ATOI_BASE("-42meow !", 8)
+	ATOI_BASE("school 42", 10)
 }
 
 int		main()
 {
-	/*printf("\n-----list_size-----\n");
-	list_size_test(5);
-	list_size_test(0);
-
+	list_size_test();
 	push_front_test();
-
 	list_sort_test();
-	list_remove_test();*/
+	list_remove_test();
 	atoi_base_test();
 	return 0;
-
 }
