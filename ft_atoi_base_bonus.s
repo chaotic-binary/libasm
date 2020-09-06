@@ -5,15 +5,17 @@ section .text
 
 _ft_atoi_base:
 ;	push	r8
+;	xor		rax, rax
 	cmp		rsi, 2			; base is in range 2 - 16
-	jl		.ret_zero
+	jl		.ret
 	cmp		rsi, 16
-	jg		.ret_zero
+	jg		.ret
 	mov		r8, 1			; sign = 1
+	xor		r9, r9			; nb = 0
 
 .while_space:
 	push	rdi
-	mov		dil, [rdi]		; pass *str as arg
+	mov		dil, byte [rdi]		; pass *str as arg
 	call	_if_space
 	pop		rdi
 	test	rax, rax
@@ -22,7 +24,7 @@ _ft_atoi_base:
 	jmp		.while_space
 
 .if_plus:
-	mov		dl, byte[rdi]	; dl = *str
+	mov		dl, byte [rdi]	; dl = *str
 	cmp		dl, 43			; if *str == '+'
 	jne		.if_minus
 	inc		rdi				; str++
@@ -35,19 +37,32 @@ _ft_atoi_base:
 	inc		rdi				; str++
 
 .while_digit:
-
-
+	mov		al, byte [rdi]
+	test	al, al			; check if *str == '\0'
+	jz		.ret
+	push	rdi
+	;	push	rsi
+	xor		rdi, rdi
+	mov		di, ax
+	xor		rax, rax
+	call	_check_digit
+;	pop		rsi
+	pop		rdi
+	cmp		rax, -1
+	je		.ret
+	imul	r9, rsi			; nb = nb * base
+	imul	rax, r8			; digit = digit * sign
+	add		r9, rax			; nb += digit
+	pop		rdi
+	inc		rdi
+	jmp		.while_digit
 ;	mov rax, 2
 ;	imul rax, r8
 ;	ret
 
-;.is_lowcase
-
-;.is_upcase
-
-.ret_zero:
+.ret:
 ;	pop		r8
-	xor		rax, rax
+	mov		rax, r9
 	ret
 
 _if_space:
@@ -68,4 +83,44 @@ _if_space:
 
 .is_space:
 	mov		rax, 1			; return 1
+	ret
+
+_check_digit:
+
+.is_digit:
+	cmp		rdi, '0'
+	jl		.invalid
+	cmp		rdi, '9'
+	jg		.is_upcase
+	cmp		rdi, rsi		; compare to base
+	sub		rdi, 48
+	jl		.valid
+	jmp		.invalid
+
+.is_upcase:
+	cmp		rdi, 'A'
+	jl		.invalid
+	cmp		rdi, 'F'
+	jg		.is_upcase
+	sub		rdi, 55
+	cmp		rdi, rsi		; compare to base
+	jl		.valid
+	jmp		.invalid
+
+.is_lowcase:
+	cmp		rdi, 'a'
+	jl		.invalid
+	cmp		rdi, 'f'
+	jg		.invalid
+	sub		rdi, 87
+	cmp		rdi, rsi		; compare to base
+	jl		.valid
+	jmp		.invalid
+
+.valid:
+	mov		rax, rdi		; return digit's numerical value
+	ret
+
+.invalid:
+	mov		rax, -1			; return -1
 	ret
