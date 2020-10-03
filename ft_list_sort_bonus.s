@@ -16,7 +16,7 @@ _ft_list_sort:
 	mov		r10, [rdi]		; tmp = *begin_list
 	test	r10, r10
 	jz		.ret
-	mov		rdx, rsi		; rdx =  *cmp
+	mov		rdx, rsi		; rdx = *cmp
 
 .loop:
 	mov		r11, [r10+8]	; r11 = tmp->next

@@ -54,6 +54,23 @@ void		list_size_test()
 	list_size(0);
 }
 
+static int	my_cmp(const char *str1, const char *str2)
+{
+	unsigned char	*s1;
+	unsigned char	*s2;
+
+	if (str1 == NULL || str2 == NULL)
+		return (-1);
+	s1 = (unsigned char *)str1;
+	s2 = (unsigned char *)str2;
+	while (*s1 == *s2 && *s1)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+
 void		list_sort_test(void)
 {
 	t_list	*list;
@@ -68,9 +85,10 @@ void		list_sort_test(void)
 	ft_list_push_front(&list, "one");
 	ft_list_push_front(&list, "x");
 	ft_list_push_front(&list, "azaza");
+	ft_list_push_front(&list, NULL);
 	printf("before:\n");
 	print_list(list);
-	ft_list_sort(&list, strcmp);
+	ft_list_sort(&list, my_cmp);
 	printf("\nafter sort:\n");
 	print_list(list);
 	printf("\n");

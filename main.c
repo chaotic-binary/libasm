@@ -4,32 +4,6 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-void	test_read(void)
-{
-	int		i;
-	long	rd;
-	char	buffer[100];
-
-	printf("\n-----read-----\n");
-	i = 0;
-	rd = 0;
-	while (i < 100)
-		buffer[i++] = 0;
-
-	rd = ft_read(0, buffer, 0);
-	printf("for empty string `%s` ft_read returns: %ld\n", buffer, rd);
-	rd = read(0, buffer, 0);
-	printf("for empty string `%s` read returns: %ld\n", buffer, rd);
-
-	rd = ft_read(-1, buffer, 50);
-	printf("for fd = -1 ft_read returns %ld, errno = %d\n", rd, errno);
-	rd = read(-1, buffer, 50);
-	printf("for fd = -1 read returns %ld, errno = %d\n", rd, errno);
-
-	rd = ft_read(STDIN_FILENO, buffer, 10);
-	printf("1st 10 symbols of Makefile is: `%s`:%ld\n", buffer, rd);
-}
-
 void	test_write(void)
 {
 	long	myret;
@@ -86,6 +60,32 @@ void	test_write(void)
 	expret = write(3,"toto", 0);
 	if (myret != expret)
 		WRITE(myret, expret);
+}
+
+void	test_read(void)
+{
+	int		i;
+	long	rd;
+	char	buffer[100];
+
+	printf("\n-----read-----\n");
+	i = 0;
+	rd = 0;
+	while (i < 100)
+		buffer[i++] = 0;
+
+	rd = ft_read(0, buffer, 0);
+	printf("for empty string `%s` ft_read returns: %ld\n", buffer, rd);
+	rd = read(0, buffer, 0);
+	printf("for empty string `%s` read returns: %ld\n", buffer, rd);
+
+	rd = ft_read(-1, buffer, 50);
+	printf("for fd = -1 ft_read returns %ld, errno = %d\n", rd, errno);
+	rd = read(-1, buffer, 50);
+	printf("for fd = -1 read returns %ld, errno = %d\n", rd, errno);
+
+	rd = ft_read(STDIN_FILENO, buffer, 10);
+	printf("1st 10 symbols of Makefile is: `%s`:%ld\n", buffer, rd);
 }
 
 void	test_strlen(void)
@@ -146,7 +146,7 @@ void	test_strcpy(void)
 
 void	test_strcmp(void)
 {
-	# define STRCMP(a, b)	printf("for `%s`:`%s` ft_strcmp returns %d, strcmp returns %d\n", a, b, ft_strcmp(a, b), strcmp(a, b));
+	# define STRCMP(a, b)	(ft_strcmp(a, b) > 0 == strcmp(a, b) > 0) ? printf("OK for `%s`:`%s`\n", a, b) : printf("for `%s`:`%s` ft_strcmp returns %d, strcmp returns %d\n", a, b, ft_strcmp(a, b), strcmp(a, b));
 
 	printf("\n-----strcmp-----\n");
 	STRCMP("", "")
