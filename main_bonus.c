@@ -15,6 +15,19 @@ void	print_list(t_list *lst)
 	printf("%s\n", "NULL");
 }
 
+void	print_list_int(t_list *lst)
+{
+	t_list	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		printf("%i->", tmp->data);
+		tmp = tmp->next;
+	}
+	printf("%s\n", "NULL");
+}
+
 void		push_front_test()
 {
 	t_list	*list;
@@ -32,6 +45,25 @@ void		push_front_test()
 	print_list(list);
 }
 
+/*
+void		push_front_test_intlist()
+{
+	t_list	*list;
+
+	printf("\n-----push_front-----\n");
+	list = NULL;
+	print_list(list);
+	ft_list_push_front(&list, 2);
+	print_list_int(list);
+	ft_list_push_front(&list, 1);
+	print_list_int(list);
+	ft_list_push_front(&list, NULL);
+	print_list_int(list);
+	ft_list_push_front(NULL, NULL);
+	print_list_int(list);
+}
+*/
+
 void		list_size(int num)
 {
 	t_list	*list;
@@ -47,51 +79,29 @@ void		list_size(int num)
 	print_list(list);
 }
 
-void		list_size_test()
-{
-	printf("\n-----list_size-----\n");
-	list_size(5);
-	list_size(0);
-}
-
-static int	my_cmp(const char *str1, const char *str2)
-{
-	unsigned char	*s1;
-	unsigned char	*s2;
-
-	if (str1 == NULL || str2 == NULL)
-		return (-1);
-	s1 = (unsigned char *)str1;
-	s2 = (unsigned char *)str2;
-	while (*s1 == *s2 && *s1)
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
-}
-
 void		list_sort_test(void)
 {
 	t_list	*list;
 
 	printf("\n-----list_sort-----\n");
 	list = NULL;
-	ft_list_push_front(&list, "test");
-	ft_list_push_front(&list, "purr");
-	ft_list_push_front(&list, "what");
-	ft_list_push_front(&list, "ok");
-	ft_list_push_front(&list, "meow");
-	ft_list_push_front(&list, "one");
-	ft_list_push_front(&list, "x");
-	ft_list_push_front(&list, "azaza");
-	ft_list_push_front(&list, NULL);
+	ft_list_push_front(&list, "2");
+	ft_list_push_front(&list, "4");
+	ft_list_push_front(&list, "3");
+	ft_list_push_front(&list, "1");
+	ft_list_push_front(&list, "2");
+	ft_list_push_front(&list, "5");
+
+	//ft_list_push_front(&list, NULL);
 	printf("before:\n");
 	print_list(list);
-	ft_list_sort(&list, my_cmp);
+	ft_list_sort(&list, &ft_strcmp);
 	printf("\nafter sort:\n");
 	print_list(list);
 	printf("\n");
+	//no segfault test
+	//ft_list_sort(NULL, strcmp);
+	//ft_list_sort(NULL, NULL);
 }
 
 void		list_remove_test(void)
@@ -154,10 +164,11 @@ void		atoi_base_test()
 
 int		main()
 {
-	list_size_test();
-	push_front_test();
+	//list_size_test();
+	//push_front_test();
+	//push_front_test_intlist();
 	list_sort_test();
-	list_remove_test();
-	atoi_base_test();
+	//list_remove_test();
+	//atoi_base_test();
 	return 0;
 }
