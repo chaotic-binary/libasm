@@ -15,7 +15,7 @@ void	print_list(t_list *lst)
 	printf("%s\n", "NULL");
 }
 
-void	print_list_int(t_list *lst)
+/*void	print_list_int(t_list *lst)
 {
 	t_list	*tmp;
 
@@ -26,7 +26,7 @@ void	print_list_int(t_list *lst)
 		tmp = tmp->next;
 	}
 	printf("%s\n", "NULL");
-}
+}*/
 
 void		push_front_test()
 {
@@ -64,7 +64,7 @@ void		push_front_test_intlist()
 }
 */
 
-void		list_size(int num)
+void		list_size_test(int num)
 {
 	t_list	*list;
 
@@ -182,11 +182,12 @@ void		atoi_base_test()
 
 int		main()
 {
-	//list_size_test();
-	//push_front_test();
-	//push_front_test_intlist();
+	printf("\n-----list_size-----\n");
+	list_size_test(0);
+	list_size_test(5);
+	push_front_test();
 	list_sort_test();
-	//list_remove_test();
-	//atoi_base_test();
+	list_remove_test();
+	atoi_base_test();
 	return 0;
 }
