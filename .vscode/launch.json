@@ -5,16 +5,12 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "(lldb) Launch",
-			"type": "cppdbg",
+			"type": "gdb",
 			"request": "launch",
+			"name": "GDB",
 			"program": "${workspaceFolder}/test",
-			"args": [],
-			"stopAtEntry": true,
-			"cwd": "${workspaceFolder}",
-			"environment": [],
-			"externalConsole": false,
-			"MIMode": "lldb"
+			"stopOnEntry": true,
+			"arguments": ""
 		}
 	]
 }

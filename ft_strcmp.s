@@ -4,7 +4,8 @@ global _ft_strcmp
 section .text
 
 _ft_strcmp:
-	push	rdi
+	push	rdx				; save register used by the func
+	push	rdi				; save pointers given as args
 	push	rsi
 	xor		rax, rax		; initialize registers with 0
 	xor		rdx, rdx
@@ -27,4 +28,5 @@ _ft_strcmp:
 .ret:
 	pop		rsi
 	pop		rdi
+	pop		rdx
 	ret		; rax = s1 - s2

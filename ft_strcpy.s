@@ -4,8 +4,9 @@ global _ft_strcpy
 section .text
 
 _ft_strcpy:
-	push	rdi
+	push	rdi				; save pointers given as an args
 	push	rsi
+	push	rdx				; save register used by the func
 	mov		rax, rdi 		; copy the pointer to dest
 
 .loop:
@@ -18,6 +19,7 @@ _ft_strcpy:
 	jmp		.loop
 
 .ret:
+	pop		rdx
 	pop		rsi
 	pop		rdi
 	ret		; return pointer to dest

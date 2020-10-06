@@ -4,8 +4,8 @@ section .text
 	global _ft_atoi_base
 
 _ft_atoi_base:
-;	push	r8
-;	push	r9
+	push	r8					; save registers used by the func
+	push	r9
 	mov		r8, 1				; sign = 1
 	xor		r9, r9				; nb = 0
 	cmp		rsi, 2				; check if base is in range 2 - 16
@@ -15,10 +15,10 @@ _ft_atoi_base:
 
 .while_space:
 	push	rdi
-	push	rsi
-	mov		dil, byte [rdi]		; pass *str as arg
-	call	_if_space
-	pop		rsi
+	mov		al, byte [rdi]		; pass *str as arg
+	xor		rdi, rdi
+	mov		di, ax
+	call	_is_space
 	pop		rdi
 	test	rax, rax
 	jz		.if_plus
@@ -58,53 +58,53 @@ _ft_atoi_base:
 
 .ret:
 	mov		rax, r9
-;	pop		r9
-;	pop		r8
+	pop		r9
+	pop		r8
 	ret
 
-_if_space:
-	cmp		dil, 9				; if *str == '\t'
-	je		.is_space
-	cmp		dil, 10				; if *str == '\n'
-	je		.is_space
-	cmp		dil, 11				; if *str == '\r'
-	je		.is_space
-	cmp		dil, 12				; if *str == 'v'
-	je		.is_space
-	cmp		dil, 13				; if *str == '\f'
-	je		.is_space
-	cmp		dil, 32				; if *str == ' '
-	je		.is_space
+_is_space:
+	cmp		rdi, 9				; if *str == '\t'
+	je		.is_really_space
+	cmp		rdi, 10				; if *str == '\n'
+	je		.is_really_space
+	cmp		rdi, 11				; if *str == '\r'
+	je		.is_really_space
+	cmp		rdi, 12				; if *str == 'v'
+	je		.is_really_space
+	cmp		rdi, 13				; if *str == '\f'
+	je		.is_really_space
+	cmp		rdi, 32				; if *str == ' '
+	je		.is_really_space
 	xor		rax, rax			; return 0
 	ret
 
-.is_space:
+.is_really_space:
 	mov		rax, 1				; return 1
 	ret
 
 _get_digit:
 
-.is_digit:
+.if_digit:
 	cmp		rdi, '0'
 	jl		.invalid
 	cmp		rdi, '9'
-	jg		.is_upcase
+	jg		.if_upcase
 	sub		rdi, 48				; *str - '0'
 	cmp		rdi, rsi			; compare to base
 	jl		.valid
 	jmp		.invalid
 
-.is_upcase:
+.if_upcase:
 	cmp		rdi, 'A'
 	jl		.invalid
 	cmp		rdi, 'F'
-	jg		.is_lowcase
+	jg		.if_lowcase
 	sub		rdi, 55				; get num value of *str
 	cmp		rdi, rsi			; compare to base
 	jl		.valid
 	jmp		.invalid
 
-.is_lowcase:
+.if_lowcase:
 	cmp		rdi, 'a'
 	jl		.invalid
 	cmp		rdi, 'f'

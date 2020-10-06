@@ -79,6 +79,23 @@ void		list_size(int num)
 	print_list(list);
 }
 
+int		ft_strcmp_noseg(char *str1, char *str2)
+{
+	unsigned char	*s1;
+	unsigned char	*s2;
+
+	if (str1 == NULL || str2 == NULL)
+		return (0);
+	s1 = (unsigned char *)str1;
+	s2 = (unsigned char *)str2;
+	while (*s1 == *s2 && *s1)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+
 void		list_sort_test(void)
 {
 	t_list	*list;
@@ -95,13 +112,13 @@ void		list_sort_test(void)
 	//ft_list_push_front(&list, NULL);
 	printf("before:\n");
 	print_list(list);
-	ft_list_sort(&list, &ft_strcmp);
 	printf("\nafter sort:\n");
+	ft_list_sort(&list, &ft_strcmp);
 	print_list(list);
 	printf("\n");
 	//no segfault test
-	//ft_list_sort(NULL, strcmp);
-	//ft_list_sort(NULL, NULL);
+	ft_list_sort(NULL, ft_strcmp_noseg);
+	ft_list_sort(NULL, NULL);
 }
 
 void		list_remove_test(void)
@@ -157,6 +174,7 @@ void		atoi_base_test()
 	ATOI_BASE("    42", 10)
 	ATOI_BASE("  \t\n\r\v\f  10", 8)
 	ATOI_BASE("  \t\n\r\v\f  -10", 8)
+	ATOI_BASE("52", 8)
 	ATOI_BASE("42meow !", 8)
 	ATOI_BASE("-42meow !", 8)
 	ATOI_BASE("school 42", 10)
