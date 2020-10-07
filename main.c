@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-void	test_write(void)
+static void	test_write(void)
 {
 	long	myret;
 	long	expret;
@@ -62,7 +62,7 @@ void	test_write(void)
 		WRITE(myret, expret);
 }
 
-void	test_read(void)
+static void	test_read(void)
 {
 	int		i;
 	long	rd;
@@ -88,7 +88,7 @@ void	test_read(void)
 	printf("1st 10 symbols of Makefile is: `%s`:%ld\n", buffer, rd);
 }
 
-void	test_strlen(void)
+static void	test_strlen(void)
 {
 	char *x;
 
@@ -99,7 +99,7 @@ void	test_strlen(void)
 	printf("for `%s` ft_strlen returns %ld, strlen returns %ld\n", x, ft_strlen(x), strlen(x));
 }
 
-void	test_strdup(void)
+static void	test_strdup(void)
 {
 	char *tmp;
 	char *str;
@@ -122,7 +122,7 @@ void	test_strdup(void)
 	STRDUP("")
 }
 
-void	test_strcpy(void)
+static void	test_strcpy(void)
 {
 	int		i;
 	char	buffer[100];
@@ -144,7 +144,7 @@ void	test_strcpy(void)
 	printf("`%s` is a copy of `long string`\n", ft_strcpy(buffer, "long string"));
 }
 
-void	test_strcmp(void)
+static void	test_strcmp(void)
 {
 	# define STRCMP(a, b)	(ft_strcmp(a, b) > 0 == strcmp(a, b) > 0) ? printf("OK for `%s`:`%s`\n", a, b) : printf("for `%s`:`%s` ft_strcmp returns %d, strcmp returns %d\n", a, b, ft_strcmp(a, b), strcmp(a, b));
 

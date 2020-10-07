@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 
-void	print_list(t_list *lst)
+static void	print_list(t_list *lst)
 {
 	t_list	*tmp;
 
@@ -15,20 +15,7 @@ void	print_list(t_list *lst)
 	printf("%s\n", "NULL");
 }
 
-/*void	print_list_int(t_list *lst)
-{
-	t_list	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		printf("%i->", tmp->data);
-		tmp = tmp->next;
-	}
-	printf("%s\n", "NULL");
-}*/
-
-void		push_front_test()
+static void		push_front_test()
 {
 	t_list	*list;
 
@@ -39,32 +26,11 @@ void		push_front_test()
 	print_list(list);
 	ft_list_push_front(&list, "one");
 	print_list(list);
-	ft_list_push_front(&list, NULL);
-	print_list(list);
+	//no segfault test
 	ft_list_push_front(NULL, NULL);
-	print_list(list);
 }
 
-/*
-void		push_front_test_intlist()
-{
-	t_list	*list;
-
-	printf("\n-----push_front-----\n");
-	list = NULL;
-	print_list(list);
-	ft_list_push_front(&list, 2);
-	print_list_int(list);
-	ft_list_push_front(&list, 1);
-	print_list_int(list);
-	ft_list_push_front(&list, NULL);
-	print_list_int(list);
-	ft_list_push_front(NULL, NULL);
-	print_list_int(list);
-}
-*/
-
-void		list_size_test(int num)
+static void		list_size_test(int num)
 {
 	t_list	*list;
 
@@ -79,37 +45,17 @@ void		list_size_test(int num)
 	print_list(list);
 }
 
-int		ft_strcmp_noseg(char *str1, char *str2)
-{
-	unsigned char	*s1;
-	unsigned char	*s2;
-
-	if (str1 == NULL || str2 == NULL)
-		return (0);
-	s1 = (unsigned char *)str1;
-	s2 = (unsigned char *)str2;
-	while (*s1 == *s2 && *s1)
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
-}
-
-void		list_sort_test(void)
+static void		list_sort_test(void)
 {
 	t_list	*list;
 
 	printf("\n-----list_sort-----\n");
 	list = NULL;
-	ft_list_push_front(&list, "2");
-	ft_list_push_front(&list, "4");
-	ft_list_push_front(&list, "3");
-	ft_list_push_front(&list, "1");
-	ft_list_push_front(&list, "2");
-	ft_list_push_front(&list, "5");
-
-	//ft_list_push_front(&list, NULL);
+	ft_list_push_front(&list, "a");
+	ft_list_push_front(&list, "meow");
+	ft_list_push_front(&list, "ac");
+	ft_list_push_front(&list, "purr");
+	ft_list_push_front(&list, "abc");
 	printf("before:\n");
 	print_list(list);
 	printf("\nafter sort:\n");
@@ -117,11 +63,10 @@ void		list_sort_test(void)
 	print_list(list);
 	printf("\n");
 	//no segfault test
-	ft_list_sort(NULL, ft_strcmp_noseg);
 	ft_list_sort(NULL, NULL);
 }
 
-void		list_remove_test(void)
+static void		list_remove_test(void)
 {
 	t_list	*list;
 
@@ -143,7 +88,7 @@ void		list_remove_test(void)
 	printf("\n");
 }
 
-void		atoi_base_test()
+static void		atoi_base_test()
 {
 	# define ATOI_BASE(s, b)	i = ft_atoi_base(s, b); printf("`%s` [base %d] = %d [base 10]\n", s, b, i);
 
@@ -156,10 +101,7 @@ void		atoi_base_test()
 	ATOI_BASE("--42", 10)
 	ATOI_BASE("++42", 10)
 	ATOI_BASE("-+-42", 10)
-	ATOI_BASE("-+-+-+42", 10)
-	ATOI_BASE("-+-+-+-42", 10)
 	ATOI_BASE("2147483647", 10)
-	ATOI_BASE("2147483648", 10)
 	ATOI_BASE("-2147483648", 10)
 	ATOI_BASE("0", 2)
 	ATOI_BASE("1", 2)

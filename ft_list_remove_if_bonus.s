@@ -9,8 +9,8 @@ _ft_list_remove_if:
 	jz		.ret
 	test	rdx, rdx
 	jz		.ret
-;	push	r10
-;	push	r11
+	push	r10
+	push	r11
 
 .loop_begin:
 	mov		r10, [rdi]		; r10 = *begin_list
@@ -22,7 +22,7 @@ _ft_list_remove_if:
 	call	rdx				; *cmp(rdi=(*begin_list)->data, rsi=data_ref)
 	pop		rsi
 	pop		rdi
-	test	rax, rax		; check cmp ret
+	test	eax, eax		; check cmp ret
 	jnz		.loop_mid
 	mov		r10, [rdi]
 	mov		r11, [r10+8]	; r11 = *begin_list->next
@@ -53,7 +53,7 @@ _ft_list_remove_if:
 	call	rdx				; *cmp(rdi=(*being_list)->data, rsi=data_ref)
 	pop		rsi
 	pop		rdi
-	test	rax, rax		; check cmp ret
+	test	eax, eax		; check cmp ret
 	jnz		.next
 	push	rdi
 	push	rsi
@@ -76,6 +76,6 @@ _ft_list_remove_if:
 	jmp		.loop_mid
 
 .ret:
-;	pop		r11
-;	pop		r10
+	pop		r11
+	pop		r10
 	ret
