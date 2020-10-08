@@ -161,10 +161,10 @@ static void	test_strcmp(void)
 
 int		main(void)
 {
-	test_strdup();
-	test_strcpy();
-	test_strlen();
 	test_strcmp();
+	test_strcpy();
+	test_strdup();
+	test_strlen();
 	test_write();
 	test_read();
 	return (0);
